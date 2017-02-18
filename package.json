@@ -19,11 +19,15 @@
   },
   "homepage": "https://github.com/iwilsonq/search-box-animation#readme",
   "dependencies": {
+    "aphrodite": "^1.1.0",
     "express": "^4.14.0",
     "material-ui": "^0.17.0",
     "nodemon": "^1.11.0",
     "react": "^15.4.2",
+    "react-animation": "0.0.1",
+    "react-animations": "^0.1.0",
     "react-dom": "^15.4.2",
+    "react-motion": "^0.4.7",
     "react-tap-event-plugin": "^2.0.1"
   },
   "devDependencies": {

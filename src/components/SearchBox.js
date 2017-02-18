@@ -2,36 +2,47 @@ import React from 'react';
 import { TextField, IconButton } from 'material-ui';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 
-const SearchBox = ({isOpen, onClick}) => {
-  const baseStyles = {
-    open: {
-      width: 300
-    },
-    closed: {
-      width: 0
-    },
-    smallIcon: {
-      width: 30,
-      height: 30
-    },
-    icon: {
-      width: 40,
-      height: 40,
-      padding: 5,
-      top: 10
-    },
-    frame: {
-      border: '1px solid black',
-      borderRadius: 5
+const baseStyles = {
+  open: {
+    width: 300
+  },
+  closed: {
+    width: 0
+  },
+  smallIcon: {
+    width: 30,
+    height: 30
+  },
+  icon: {
+    width: 40,
+    height: 40,
+    padding: 5,
+    top: 10
+  },
+  frame: {
+    border: '1px solid black',
+    borderRadius: 5
+  }
+};
+
+const SearchBox = ({ isOpen, onClick, query, onSubmit, onQueryUpdate, additionalStyles, frameClass }) => {
+  const handleKeyDown = event => {
+    const ENTER_KEY = 13;
+    if (event.keyCode === ENTER_KEY) {
+      event.preventDefault();
+      onSubmit();
     }
   };
 
-  const textStyle = isOpen ? baseStyles.open : baseStyles.closed;
-  const divStyle = Object.assign({}, textStyle, baseStyles.frame);
+  let textStyle = isOpen ? baseStyles.open : baseStyles.closed;
+  textStyle = Object.assign(textStyle, additionalStyles ? additionalStyles.text : {});
+
+  const divStyle = Object.assign({}, textStyle, baseStyles.frame,
+    additionalStyles ? additionalStyles.frame : {});
   divStyle.width += baseStyles.icon.width + 5;
 
   return (
-    <div style={divStyle}>
+    <div style={divStyle} className={frameClass ? frameClass : ''}>
       <IconButton
         iconStyle={baseStyles.smallIcon}
         style={baseStyles.icon}
@@ -39,7 +50,12 @@ const SearchBox = ({isOpen, onClick}) => {
       >
         <SearchIcon />
       </IconButton>
-      <TextField name='search' style={textStyle} />
+      <TextField name='search'
+        style={textStyle}
+        value={query}
+        onKeyDown={handleKeyDown}
+        onChange={(event, value) => onQueryUpdate(value)}
+      />
     </div>
   );
 };

@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+const animationStyle = {
+  transition: 'width 1s cubic-bezier(0.000, 0.795, 0.000, 1.000)'
+};
+
 // Higher Order Component
 const makeExpanding = Target => {
   return class extends Component {
@@ -18,6 +22,7 @@ const makeExpanding = Target => {
           {...this.props}
           isOpen={this.state.isOpen}
           onClick={this.onClick.bind(this)}
+          additionalStyles={{ text: animationStyle, frame: animationStyle }}
         />
       );
     }
